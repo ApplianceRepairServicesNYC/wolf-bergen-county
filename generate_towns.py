@@ -377,11 +377,11 @@ def main():
 
     base_dir = '/private/tmp/wolf-bergen-county/nj'
 
-    # Generate nj/index.html
-    nj_index = create_nj_index(homepage)
-    with open(os.path.join(base_dir, 'index.html'), 'w', encoding='utf-8') as f:
-        f.write(nj_index)
-    print("Generated: nj/index.html")
+    # Note: nj/index.html is a custom service areas page - do not regenerate
+    # nj_index = create_nj_index(homepage)
+    # with open(os.path.join(base_dir, 'index.html'), 'w', encoding='utf-8') as f:
+    #     f.write(nj_index)
+    # print("Generated: nj/index.html")
 
     for town_name, town_slug, region, description, notable in TOWNS:
         # Create directory
