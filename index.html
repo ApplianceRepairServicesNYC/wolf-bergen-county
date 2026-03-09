@@ -1780,60 +1780,49 @@
                 });
             });
             
-            // Modal functionality
+            // Modal System
             var modalOverlay = document.getElementById('modalOverlay');
-            var privacyModal = document.getElementById('privacyModal');
-            var termsModal = document.getElementById('termsModal');
-            var reviewsModal = document.getElementById('reviewsModal');
-            var writeReviewModal = document.getElementById('writeReviewModal');
-            var epaModal = document.getElementById('epaModal');
-            
-            function openModal(modalId) {
-                modalOverlay.classList.add('active');
-                document.getElementById(modalId).classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeAllModals() {
-                modalOverlay.classList.remove('active');
-                privacyModal.classList.remove('active');
-                termsModal.classList.remove('active');
-                if (reviewsModal) reviewsModal.classList.remove('active');
-                if (writeReviewModal) writeReviewModal.classList.remove('active');
-                if (epaModal) epaModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-            
-            // Lazy load Elfsight widget
+            var modals = document.querySelectorAll('.modal-card');
+
+            // Lazy load Elfsight when reviews modal opens
             var elfsightLoaded = false;
             function loadElfsightWidget() {
                 if (elfsightLoaded) return;
-                elfsightLoaded = true;
                 var script = document.createElement('script');
                 script.src = 'https://static.elfsight.com/platform/platform.js';
                 script.async = true;
-                document.head.appendChild(script);
+                document.body.appendChild(script);
+                elfsightLoaded = true;
             }
-            
-            // Modal triggers
+
+            // Open modal
             document.querySelectorAll('.modal-trigger').forEach(function(trigger) {
                 trigger.addEventListener('click', function(e) {
                     e.preventDefault();
                     var modalId = this.getAttribute('data-modal');
-                    // Load Elfsight widget only when reviews modal is opened
-                    if (modalId === 'reviewsModal') {
-                        loadElfsightWidget();
+                    var modal = document.getElementById(modalId);
+                    if (modal) {
+                        modalOverlay.classList.add('active');
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        if (modalId === 'reviewsModal') loadElfsightWidget();
                     }
-                    openModal(modalId);
                 });
             });
+
+            // Close modal
+            function closeAllModals() {
+                modalOverlay.classList.remove('active');
+                modals.forEach(function(m) { m.classList.remove('active'); });
+                document.body.style.overflow = '';
+            }
             
             // Write Review Button
             var writeReviewBtn = document.getElementById('writeReviewBtn');
             if (writeReviewBtn) {
                 writeReviewBtn.addEventListener('click', function() {
-                    reviewsModal.classList.remove('active');
-                    openModal('writeReviewModal');
+                    document.getElementById('reviewsModal').classList.remove('active');
+                    document.getElementById('writeReviewModal').classList.add('active');
                 });
             }
             
