@@ -1548,14 +1548,16 @@
                 });
             }
             document.addEventListener('click', closeDropdown);
-            
+
             // Prevent additional submenu items from closing dropdown
-            var additionalItems = additionalSubmenu.querySelectorAll('li');
-            additionalItems.forEach(function(item) {
-                item.addEventListener('click', function(e) {
-                    e.stopPropagation();
+            if (additionalSubmenu) {
+                var additionalItems = additionalSubmenu.querySelectorAll('li');
+                additionalItems.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
                 });
-            });
+            }
 
             // Hero and book buttons open form
             var heroCallNow = document.getElementById('heroCallNow');
