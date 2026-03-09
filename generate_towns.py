@@ -251,6 +251,9 @@ def create_town_page(homepage_content, town_name, town_slug, region, description
     content = content.replace('alt="Wolf Range Repair Bergen County NJ"', f'alt="Wolf Range Repair {town_name} NJ"')
     content = content.replace('alt="Wolf Wall Oven Repair Bergen County NJ"', f'alt="Wolf Wall Oven Repair {town_name} NJ"')
 
+    # Fix footer Home link to go to homepage
+    content = content.replace('<a href="#" class="scroll-top">Home</a>', '<a href="/">Home</a>')
+
     # Replace footer info
     content = re.sub(
         r'<h2>Wolf Appliance Repair Bergen County NJ</h2>',
@@ -311,12 +314,74 @@ def create_town_page(homepage_content, town_name, town_slug, region, description
 
     return content
 
+def create_nj_index(homepage_content):
+    """Create nj/index.html with same header/footer as homepage but town grid content."""
+
+    content = homepage_content
+
+    # Replace title
+    content = re.sub(
+        r'<title>Wolf Appliance Repair Bergen County NJ - Authorized</title>',
+        '<title>Wolf Appliance Repair Bergen County NJ - All Service Areas</title>',
+        content
+    )
+
+    # Replace meta description
+    content = re.sub(
+        r'<meta name="description" content="[^"]+">',
+        '<meta name="description" content="Wolf Appliance Repair serving all Bergen County NJ towns. Hackensack, Paramus, Fort Lee, Ridgewood, Teaneck and 70+ more towns.">',
+        content
+    )
+
+    # Replace canonical
+    content = re.sub(
+        r'<link rel="canonical" href="https://wolfbergencounty.com/">',
+        '<link rel="canonical" href="https://wolfbergencounty.com/nj/">',
+        content
+    )
+
+    # Replace OG URL
+    content = re.sub(
+        r'<meta property="og:url" content="https://wolfbergencounty.com/">',
+        '<meta property="og:url" content="https://wolfbergencounty.com/nj/">',
+        content
+    )
+
+    # Replace hero h1
+    content = re.sub(
+        r'<h1>Wolf Appliance Repair Bergen County NJ - Authorized</h1>',
+        '<h1>Wolf Appliance Repair - All Bergen County NJ Towns</h1>',
+        content
+    )
+
+    # Replace hero p
+    content = re.sub(
+        r'<p>Premium Service • Factory-Trained Technicians • Serving Hackensack, Paramus, Fort Lee and all Bergen County</p>',
+        '<p>Factory-Certified Technicians • Same-Day Service • Select Your Town Below</p>',
+        content
+    )
+
+    # Fix asset paths
+    content = content.replace('href="assets/', 'href="/assets/')
+    content = content.replace('src="assets/', 'src="/assets/')
+    content = content.replace('href="favicon.png"', 'href="/favicon.png"')
+    content = content.replace("url('assets/", "url('/assets/")
+
+    return content
+
+
 def main():
     # Read homepage template
     with open('/private/tmp/wolf-bergen-county/index.html', 'r', encoding='utf-8') as f:
         homepage = f.read()
 
     base_dir = '/private/tmp/wolf-bergen-county/nj'
+
+    # Generate nj/index.html
+    nj_index = create_nj_index(homepage)
+    with open(os.path.join(base_dir, 'index.html'), 'w', encoding='utf-8') as f:
+        f.write(nj_index)
+    print("Generated: nj/index.html")
 
     for town_name, town_slug, region, description, notable in TOWNS:
         # Create directory
