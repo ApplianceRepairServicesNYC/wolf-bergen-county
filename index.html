@@ -399,8 +399,8 @@
         .borough-map-section h2 { font-size: 32px; text-align: center; color: #1a1a2e; margin-bottom: 10px; }
         .borough-map-section > p { font-size: 16px; text-align: center; color: #555; margin-bottom: 30px; }
         .borough-cards-grid {
-            display: flex; justify-content: center; gap: 24px;
-            max-width: 900px; margin: 0 auto; flex-wrap: wrap;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+            max-width: 900px; margin: 0 auto;
         }
         @media (max-width: 600px) { .borough-cards-grid { grid-template-columns: 1fr; gap: 20px; } }
         .borough-card {
