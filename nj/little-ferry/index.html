@@ -892,10 +892,13 @@
 
         
     <!-- UNIQUE TOWN CONTENT SECTION -->
-    <section class="about-town-section" style="background: #f8f9fa; padding: 60px 0;">
-        <div class="container">
-            <h2 style="text-align: center; font-size: 32px; margin-bottom: 40px; color: #1a1a2e;">Wolf Appliance Repair Services in Little Ferry</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+    <section class="about-town-section" style="background: #f8f9fa; padding: 40px 0;">
+        <div class="container" style="text-align: center;">
+            <button onclick="toggleTownInfo()" id="townInfoBtn" style="background: var(--blue); color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                Learn More About Little Ferry <span id="townInfoArrow">▼</span>
+            </button>
+            <div id="townInfoContent" style="display: none; margin-top: 30px; text-align: left;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
                     <h3 style="color: #c41e3a; font-size: 22px; margin-bottom: 15px;">About Little Ferry</h3>
                     <p style="color: #555; line-height: 1.8;">Little Ferry is a borough in Bergen County, New Jersey with a population of approximately 10,900 residents (ZIP: 07643). Known as a affordable community with waterfront recreation, Little Ferry features Hackensack River access and Memorial School. Our Wolf-certified technicians proudly serve homeowners throughout this community.</p>
@@ -910,9 +913,23 @@
                 </div>
             </div>
         </div>
+            </div>
+        </div>
+        <script>
+        function toggleTownInfo() {
+            var content = document.getElementById('townInfoContent');
+            var arrow = document.getElementById('townInfoArrow');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                arrow.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+            }
+        }
+        </script>
     </section>
-
-    <section class="trust-badges-section">
+<section class="trust-badges-section">
         <h2>Certified Wolf Repair in Little Ferry</h2>
         <div class="trust-badges-container">
             <div class="trust-badge">
